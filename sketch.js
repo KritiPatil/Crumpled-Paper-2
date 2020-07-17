@@ -1,19 +1,18 @@
 var helicopterIMG, helicopterSprite, packageSprite,packageIMG;
-var packageBody,ground;
-var db1, db2, db3, paper;
+var packageBody,ground, image;
+var db1, db2, db3, paper, wall;
 
 const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
 
-function preload()
-{
-	
+function preload() {
+  img = loadImage('dustbingreen.png');
 }
 
 function setup() {
-	createCanvas(800, 700);
+	createCanvas(800, 650);
 
 
 	engine = Engine.create();
@@ -29,11 +28,10 @@ function setup() {
 	ground = Bodies.rectangle(width/2, 650, width, 10 , {isStatic:true} );
 	 World.add(world, ground);
 
-	 db1 = new Dustbin(670, 640, 200, 180);
-	 //db2 = new Dustbin(570, 640, 10, 60);
-	 //db3 = new Dustbin(750, 640, 10, 70);
+	 //db1 = new Dustbin(670, 640, 200, 180, {isStatic:false});
 
-	 //paper = new Paper(100, 640, 50);
+	 var wall = rect(670, 540, 200, 180);
+	 
 
 	Engine.run(engine);
   
@@ -41,16 +39,22 @@ function setup() {
 
 
 function draw() {
-  rectMode(CENTER);
-  background(0);
 
-  db1.display();
+  rectMode(CENTER);
+  background("white");
+
+  rect(670, 540, 180, 190);
+
+  //db1.display();
   packageBody.display();
 
-  keyPressed();
+  imageMode(CENTER);
+	 image(img, 670, 540, 200, 210);
 
+  push ();
   fill ("yellow");
   rect(ground.position.x, ground.position.y, width, 10);
+  pop ();
 
   drawSprites();
  
@@ -58,6 +62,6 @@ function draw() {
 
 function keyPressed() {
 	if(keyCode 	=== UP_ARROW) {
-       Matter.Body.applyForce(packageBody.body, packageBody.body.position, {x:1, y:-11.6});
+       Matter.Body.applyForce(packageBody.body, packageBody.body.position, {x:150, y:-400});
 	}
 }
